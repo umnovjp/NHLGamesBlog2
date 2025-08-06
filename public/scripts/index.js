@@ -150,7 +150,7 @@ const handleFormSubmit = (e) => {
   const tipUsername = document.getElementById('tipUsername').value.trim();
 
   // Create an object with the tip and username
-  const newTip = {
+  const newTip = { title: userTitle;
     username: tipUsername,
     topic: 'UX',
     tip: tipContent,
@@ -162,6 +162,8 @@ const handleFormSubmit = (e) => {
   // If the submission is valid, post the tip. Otherwise, handle the errors.
   return submission.isValid ? postTip(newTip) : submitDiagnostics(submission);
 };
+
+// to add function here on 08.06
 
 // Listen for when the form is submitted
 tipForm.addEventListener('submit', handleFormSubmit);
