@@ -183,7 +183,24 @@ function selectGame() {var inputVal = document.getElementById('datepicker').valu
         document.getElementById('gamesPlayed').appendChild(gameName);
         gameName.addEventListener('click', displayGameData);
       }
-      function displayGameData (event) {}
+      function displayGameData(event) { idx = event.currentTarget; idxString = event.currentTarget.textContent;
+        idxArray = idxString.split(':'); idxNumber = idxArray[0].split(' ');
+        console.log(idxNumber); gameNumber = idxNumber[1];
+        const gameId = data2.gameWeek[0].games[gameNumber].id;
+        console.log(gameId);
+        // var requestURL = 'https://corsproxy.io/https://api-web.nhle.com/v1/gamecenter/' + gameId + '/play-by-play';
+        var requestURL = 'https://cors-anywhere.herokuapp.com/https://api-web.nhle.com/v1/gamecenter/' + gameId + '/play-by-play';
+        fetch(requestURL, {
+          "method": "GET", "headers": { }
+        })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) { console.log('I am in second then')
+
+          }
+        );
+      } // end displayGamedata
 
     } // end first second .then
     )}
