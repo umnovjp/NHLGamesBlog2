@@ -1,11 +1,10 @@
 const tipForm = document.getElementById('tip-form');
 const tipsContainer = document.getElementById('tip-container');
-const fbBtn = document.getElementById('feedback-btn');
-
-fbBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  window.location.href = '/feedback';
-});
+var game0 = document.getElementById('game0');
+const frequency = (arr, item) => {let count = 0;
+  for (let i = 0; i < arr.length; i++) {if (arr[i] === item) {count++}}
+  return count;
+};
 
 const createCard = (tip) => {
   // Create card
@@ -150,7 +149,7 @@ const handleFormSubmit = (e) => {
   const tipUsername = document.getElementById('tipUsername').value.trim();
 
   // Create an object with the tip and username
-  const newTip = { title: userTitle;
+  const newTip = { title: userTitle,
     username: tipUsername,
     topic: 'UX',
     tip: tipContent,
@@ -163,7 +162,31 @@ const handleFormSubmit = (e) => {
   return submission.isValid ? postTip(newTip) : submitDiagnostics(submission);
 };
 
-// to add function here on 08.06
+function selectGame() {var inputVal = document.getElementById('datepicker').value;
+  var date = inputVal.split('/');
+  var formatted = date[2] + '-' + date[0] + '-' + date[1];
+  // var requestURL = 'https://corsproxy.io/https://api-web.nhle.com/v1/schedule/'+ formatted;
+  var requestURL = 'https://cors-anywhere.herokuapp.com/https://api-web.nhle.com/v1/schedule/'+ formatted;
+  console.log(requestURL);
+  fetch(requestURL, {
+    "method": "GET", "headers": {}
+  })
+    .then(function (response) {return response.json()})
+    .then(function (data2) { 
+      console.log('I am in schedule then');
+      var numberOfGames = data2.gameWeek[0].games.length;
+      for (var i = 0; i < numberOfGames; i++) {
+        var gameName = document.createElement('button');
+        gameName.setAttribute('id', 'game' + i);
+        var idx = gameName.getAttribute('id');
+        gameName.innerHTML = 'Game ' + i + ': ' + data2.gameWeek[0].games[i].awayTeam.abbrev + ' ' + data2.gameWeek[0].games[i].homeTeam.abbrev;
+        document.getElementById('gamesPlayed').appendChild(gameName);
+        gameName.addEventListener('click', displayGameData);
+      }
+      function displayGameData (event) {}
+
+    } // end first second .then
+    )}
 
 // Listen for when the form is submitted
 tipForm.addEventListener('submit', handleFormSubmit);
