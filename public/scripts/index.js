@@ -189,14 +189,20 @@ function selectGame() {var inputVal = document.getElementById('datepicker').valu
         const gameId = data2.gameWeek[0].games[gameNumber].id;
         console.log(gameId);
         // var requestURL = 'https://corsproxy.io/https://api-web.nhle.com/v1/gamecenter/' + gameId + '/play-by-play';
-        var requestURL = 'https://cors-anywhere.herokuapp.com/https://api-web.nhle.com/v1/gamecenter/' + gameId + '/play-by-play';
+        var requestURL = 'https://cors-anywhere.herokuapp.com/https://api-web.nhle.com/v1/gamecenter/' + gameId + '/boxscore';
         fetch(requestURL, {
           "method": "GET", "headers": { }
         })
-          .then(function (response) {
-            return response.json();
-          })
-          .then(function (data) { console.log('I am in second then')
+          .then(function (response) { return response.json()})
+          .then(function (data) { console.log('I am in second then');
+            console.log(data.playerByGameStats)
+            var shiftsURL = 'https://cors-anywhere.herokuapp.com/https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId=' + gameId;
+            fetch(shiftsURL, { "method": "GET", "headers": {} })
+            .then(function (response) {return response.json()})
+            .then(function (data_shifts) {
+              // to add function here tomorrow
+              console.log ('I am in 3rd then')
+            })
 
           }
         );
