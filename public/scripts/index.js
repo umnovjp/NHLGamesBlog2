@@ -1,4 +1,4 @@
-const tipForm = document.getElementById('tip-form');
+const tipForm = document.getElementById('tip-form'); const script1 = require('./Script1');
 const tipsContainer = document.getElementById('tip-container');
 var game0 = document.getElementById('game0');
 const frequency = (arr, item) => {let count = 0;
@@ -194,7 +194,9 @@ function selectGame() {var inputVal = document.getElementById('datepicker').valu
             var shiftsURL = 'https://cors-anywhere.herokuapp.com/https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId=' + gameId;
             fetch(shiftsURL, { "method": "GET", "headers": {} })
             .then(function (response) {return response.json()})
-            .then(function (data_shifts) { console.log (data.playerByGameStats.homeTeam)
+            .then(function (data_shifts) { console.log (data.playerByGameStats.homeTeam);
+              console.log(script1.pie)
+              console.log(script1.predictable)
             })
           }
         );
