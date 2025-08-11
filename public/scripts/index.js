@@ -173,28 +173,28 @@ function selectGame() {var inputVal = document.getElementById('datepicker').valu
   })
     .then(function (response) {return response.json()})
     .then(function (data2) { console.log('I am in schedule then');
-      var numberOfGames = data2.gameWeek[0].games.length;
-      for (var i = 0; i < numberOfGames; i++) { var gameName = document.createElement('button');
+      // var numberOfGames = data2.gameWeek[0].games.length;
+      for (var i = 0; i < data2.gameWeek[0].games.length; i++) { var gameName = document.createElement('button');
         gameName.setAttribute('id', 'game' + i); var idx = gameName.getAttribute('id');
         gameName.innerHTML = 'Game ' + i + ': ' + data2.gameWeek[0].games[i].awayTeam.abbrev + ' ' + data2.gameWeek[0].games[i].homeTeam.abbrev;
         document.getElementById('gamesPlayed').appendChild(gameName); gameName.addEventListener('click', displayGameData);
       }
       function displayGameData(event) { idx = event.currentTarget; idxString = event.currentTarget.textContent;
-        idxArray = idxString.split(':'); idxNumber = idxArray[0].split(' ');
-        console.log(idxNumber); gameNumber = idxNumber[1];
-        const gameId = data2.gameWeek[0].games[gameNumber].id;
-        console.log(gameId);
+        idxArray = idxString.split(':'); idxNumber = idxArray[0].split(' '); console.log(idxNumber); gameNumber = idxNumber[1];
+        // const gameId = data2.gameWeek[0].games[gameNumber].id;
+        // console.log(gameId);
         // var requestURL = 'https://corsproxy.io/https://api-web.nhle.com/v1/gamecenter/' + gameId + '/play-by-play';
-        var requestURL = 'https://cors-anywhere.herokuapp.com/https://api-web.nhle.com/v1/gamecenter/' + gameId + '/boxscore';
+        var requestURL = 'https://cors-anywhere.herokuapp.com/https://api-web.nhle.com/v1/gamecenter/' + data2.gameWeek[0].games[gameNumber].id + '/boxscore';
         fetch(requestURL, { "method": "GET", "headers": { }
         })
           .then(function (response) { return response.json()})
           .then(function (data) { console.log('I am in second then');
-            console.log(data.playerByGameStats)
+            console.log(data.playerByGameStats.homeTeam)
             var shiftsURL = 'https://cors-anywhere.herokuapp.com/https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId=' + gameId;
             fetch(shiftsURL, { "method": "GET", "headers": {} })
             .then(function (response) {return response.json()})
-            .then(function (data_shifts) { console.log (data.playerByGameStats.homeTeam);
+            .then(function (data_shifts) { console.log (data_shifts);
+              console.log('I am in shifts then')
               
             })
           }
