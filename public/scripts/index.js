@@ -1,13 +1,12 @@
 const tipForm = document.getElementById('tip-form');
 const tipsContainer = document.getElementById('tip-container');
 var game0 = document.getElementById('game0');
-const frequency = (arr, item) => {let count = 0;
-  for (let i = 0; i < arr.length; i++) {if (arr[i] === item) {count++}}
-  return count;
-};
+// const frequency = (arr, item) => {let count = 0;
+//   for (let i = 0; i < arr.length; i++) {if (arr[i] === item) {count++}}
+//   return count;
+// };
 
-const createCard = (tip) => {
-  // Create card
+const createCard = (tip) => {// Create card
   const cardEl = document.createElement('div');
   cardEl.classList.add('card', 'mb-3', 'm-3');
   cardEl.setAttribute('key', tip.tip_id);
@@ -40,24 +39,18 @@ const createCard = (tip) => {
 const getTips = () =>
   fetch('/api/tips', {
     method: 'GET', // or 'PUT'
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     // body: JSON.stringify(data),
   })
     .then((response) => response.json())
     .then((data) => data)
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+    .catch((error) => { console.error('Error:', error) });
 
 // Post a new tip to the page
 const postTip = (tip) =>
   fetch('/api/tips', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(tip),
   })
     .then((response) => response.json())
@@ -65,9 +58,7 @@ const postTip = (tip) =>
       alert(data);
       createCard(tip);
     })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+    .catch((error) => { console.error('Error:', error) });
 
 // When the page loads, get all the tips
 getTips().then((data) => data.forEach((tip) => createCard(tip)));
@@ -91,15 +82,11 @@ const validateTip = (newTip) => {
 
   // Bool value to see if the tip being added is at least 15 characters long
   const tipContentCheck = tip.length > 15;
-  if (!tipContentCheck) {
-    errorState.tip = 'Tip must be at least 15 characters';
-  }
+  if (!tipContentCheck) { errorState.tip = 'Tip must be at least 15 characters' }
 
   // Bool value to see if the topic is either UX or UI
   const topicCheck = topic.includes('UX' || 'UI');
-  if (!topicCheck) {
-    errorState.topic = 'Topic not relevant to UX or UI';
-  }
+  if (!topicCheck) { errorState.topic = 'Topic not relevant to UX or UI' }
 
   const result = {
     isValid: !!(utest && tipContentCheck && topicCheck),
@@ -115,9 +102,7 @@ const validateTip = (newTip) => {
 const showErrors = (errorObj) => {
   const errors = Object.values(errorObj);
   errors.forEach((error) => {
-    if (error.length > 0) {
-      alert(error);
-    }
+    if (error.length > 0) { alert(error) }
   });
 };
 
@@ -132,9 +117,7 @@ const submitDiagnostics = (submissionObj) => {
   })
     .then((response) => response.json())
     .then(() => showErrors(submissionObj.errors))
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+    .catch((error) => { console.error('Error:', error) });
 };
 
 // Function to handle when a user submits the feedback form
@@ -191,7 +174,7 @@ function selectGame() {var inputVal = document.getElementById('datepicker').valu
             .then(function (response) {return response.json()})
             .then(function (data_shifts) { console.log (data_shifts);
               console.log('I am in shifts then')
-              // will add script here but I do not have concept at this time              
+              // still do not have concept except to learn how imports works             
             })
           }
         );
