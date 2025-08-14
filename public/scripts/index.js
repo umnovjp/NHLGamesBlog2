@@ -161,23 +161,25 @@ function selectGame() {var inputVal = document.getElementById('datepicker').valu
       }
       function displayGameData(event) { idx = event.currentTarget; idxString = event.currentTarget.textContent;
         idxArray = idxString.split(':'); idxNumber = idxArray[0].split(' '); console.log(idxNumber); gameNumber = idxNumber[1];
-        // const gameId = data2.gameWeek[0].games[gameNumber].id;
-        // var requestURL = 'https://corsproxy.io/https://api-web.nhle.com/v1/gamecenter/' + gameId + '/play-by-play';
+        // var requestURL = 'https://corsproxy.io/https://api-web.nhle.com/v1/gamecenter/' + data2.gameWeek[0].games[gameNumber].id + '/play-by-play';
         var requestURL = 'https://cors-anywhere.herokuapp.com/https://api-web.nhle.com/v1/gamecenter/' + data2.gameWeek[0].games[gameNumber].id + '/boxscore';
         fetch(requestURL, { "method": "GET", "headers": { }
         })
           .then(function (response) { return response.json()})
           .then(function (data) { console.log('I am in second then');
             console.log(data.playerByGameStats.homeTeam);
+            for (i=0;i<data.playerByGameStats.homeTeam.forwards.length;i++) {
+              console.log(data.playerByGameStats.homeTeam.forwards[i])
+            }
             var shiftsURL = 'https://cors-anywhere.herokuapp.com/https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId=' + data2.gameWeek[0].games[gameNumber].id;;
             fetch(shiftsURL, { "method": "GET", "headers": {} })
             .then(function (response) {return response.json()})
             .then(function (data_shifts) { console.log (data_shifts);
               console.log('I am in shifts then')
-              // still do not have concept except to learn how imports works             
+              // still do not have concept except to learn how imports works
+              for (i=0;i<data_shifts.length;i++) {if (data_shifts[i].typeCode!=505) {console.log(data_shifts[i].typeCode)}}
             })
-          }
-        );
+          });
       } // end displayGamedata
     } // end first second .then
     )}
