@@ -1,10 +1,5 @@
-const tipForm = document.getElementById('tip-form');
-const tipsContainer = document.getElementById('tip-container');
+const tipForm = document.getElementById('tip-form'); const tipsContainer = document.getElementById('tip-container');
 var game0 = document.getElementById('game0');
-// const frequency = (arr, item) => {let count = 0;
-//   for (let i = 0; i < arr.length; i++) {if (arr[i] === item) {count++}}
-//   return count;
-// };
 
 const createCard = (tip) => {// Create card
   const cardEl = document.createElement('div');
@@ -149,7 +144,6 @@ function selectGame() {var inputVal = document.getElementById('datepicker').valu
   var date = inputVal.split('/'); var formatted = date[2] + '-' + date[0] + '-' + date[1];
   // var requestURL = 'https://corsproxy.io/https://api-web.nhle.com/v1/schedule/'+ formatted;
   var requestURL = 'https://cors-anywhere.herokuapp.com/https://api-web.nhle.com/v1/schedule/'+ formatted;
-  // console.log(requestURL);
   fetch(requestURL, { "method": "GET", "headers": {}
   })
     .then(function (response) {return response.json()})
@@ -166,18 +160,19 @@ function selectGame() {var inputVal = document.getElementById('datepicker').valu
         fetch(requestURL, { "method": "GET", "headers": { }
         })
           .then(function (response) { return response.json()})
-          .then(function (data) { console.log('I am in second then');
-            console.log(data.playerByGameStats.homeTeam);
-            for (i=0;i<data.playerByGameStats.homeTeam.forwards.length;i++) {
-              console.log(data.playerByGameStats.homeTeam.forwards[i])
-            }
+          .then(function (data) { console.log('I am in second then'); console.log(data.playerByGameStats.homeTeam);
+            for (i=0;i<data.playerByGameStats.homeTeam.forwards.length;i++) { console.log(data.playerByGameStats.homeTeam.forwards[i]) }
             var shiftsURL = 'https://cors-anywhere.herokuapp.com/https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId=' + data2.gameWeek[0].games[gameNumber].id;;
             fetch(shiftsURL, { "method": "GET", "headers": {} })
             .then(function (response) {return response.json()})
-            .then(function (data_shifts) { console.log (data_shifts);
+            .then(function (data_shifts) { console.log (data_shifts.data, typeof data_shifts.data);
               console.log('I am in shifts then')
               // still do not have concept except to learn how imports works
-              for (i=0;i<data_shifts.length;i++) {if (data_shifts[i].typeCode!=505) {console.log(data_shifts[i].typeCode)}}
+              for (i=0;i<data_shifts.data.length;i++) {
+                if (data_shifts.data[i].typeCode===505) {
+                  console.log(data_shifts.data[i])
+                }
+              }
             })
           });
       } // end displayGamedata
